@@ -93,7 +93,7 @@ fun PuppyList(puppies: List<Puppy>) {
             )
         }
         items(puppies) { puppy ->
-            com.example.androiddevchallenge.Puppy(puppy = puppy, onClick = {
+            Puppy(puppy = puppy, onClick = {
                 context.startActivity(Intent(context, DetailActivity::class.java).apply {
                     this.putExtra("puppy", puppy)
                 })
