@@ -15,14 +15,32 @@
  */
 package com.example.androiddevchallenge
 
+import android.graphics.fonts.FontStyle
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.androiddevchallenge.model.Puppy
+import com.example.androiddevchallenge.model.getFakePuppyList
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
@@ -39,8 +57,8 @@ class MainActivity : AppCompatActivity() {
 // Start building your app here!
 @Composable
 fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+    Surface(color = Color.White, modifier = Modifier.fillMaxHeight(1f)) {
+        PuppyList(puppies = getFakePuppyList())
     }
 }
 
@@ -57,5 +75,49 @@ fun LightPreview() {
 fun DarkPreview() {
     MyTheme(darkTheme = true) {
         MyApp()
+    }
+}
+
+@Composable
+fun PuppyList(puppies: List<Puppy>) {
+    LazyColumn(
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        item {
+            Text(
+                "Demo Android Compose", color = Color.Black, modifier = Modifier
+                    .padding(top = 16.dp, bottom = 16.dp),
+                fontFamily = FontFamily.Serif, fontSize = 24.sp
+            )
+        }
+        items(puppies) { puppy ->
+            com.example.androiddevchallenge.Puppy(puppy = puppy, onClick = {
+                Log.d("test", "test")
+            })
+        }
+    }
+}
+
+@Composable
+fun Puppy(
+    puppy: Puppy,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick, modifier = Modifier
+            .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = Color.Black)
+            .background(Color.White)
+            .wrapContentHeight(Alignment.Top)
+            .clickable(
+                onClick = onClick, enabled = true
+            )
+            .fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+    ) {
+        Text(
+            puppy.name, color = Color.Black, modifier = Modifier
+                .padding(top = 16.dp, bottom = 16.dp, start = 8.dp)
+        )
     }
 }
