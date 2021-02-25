@@ -15,9 +15,8 @@
  */
 package com.example.androiddevchallenge
 
-import android.graphics.fonts.FontStyle
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
@@ -35,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -80,6 +80,7 @@ fun DarkPreview() {
 
 @Composable
 fun PuppyList(puppies: List<Puppy>) {
+    val context = LocalContext.current
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -93,7 +94,9 @@ fun PuppyList(puppies: List<Puppy>) {
         }
         items(puppies) { puppy ->
             com.example.androiddevchallenge.Puppy(puppy = puppy, onClick = {
-                Log.d("test", "test")
+                context.startActivity(Intent(context, DetailActivity::class.java).apply {
+                    this.putExtra("puppy", puppy)
+                })
             })
         }
     }
