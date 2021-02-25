@@ -92,17 +92,23 @@ fun PuppyList(puppies: List<Puppy>) {
     ) {
         item {
             Text(
-                "Demo Android Compose", color = Color.Black, modifier = Modifier
+                "Demo Android Compose", color = Color.Black,
+                modifier = Modifier
                     .padding(top = 16.dp, bottom = 16.dp),
                 fontFamily = FontFamily.Serif, fontSize = 24.sp
             )
         }
         items(puppies) { puppy ->
-            Puppy(puppy = puppy, onClick = {
-                context.startActivity(Intent(context, DetailActivity::class.java).apply {
-                    this.putExtra("puppy", puppy)
-                })
-            })
+            Puppy(
+                puppy = puppy,
+                onClick = {
+                    context.startActivity(
+                        Intent(context, DetailActivity::class.java).apply {
+                            this.putExtra("puppy", puppy)
+                        }
+                    )
+                }
+            )
         }
     }
 }
@@ -113,7 +119,8 @@ fun Puppy(
     onClick: () -> Unit
 ) {
     Button(
-        onClick = onClick, modifier = Modifier
+        onClick = onClick,
+        modifier = Modifier
             .border(width = 1.dp, shape = RoundedCornerShape(4.dp), color = Color.Black)
             .background(Color.White)
             .wrapContentHeight(Alignment.Top)
@@ -124,7 +131,8 @@ fun Puppy(
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
     ) {
         Text(
-            puppy.name, color = Color.Black, modifier = Modifier
+            puppy.name, color = Color.Black,
+            modifier = Modifier
                 .padding(top = 16.dp, bottom = 16.dp, start = 8.dp)
         )
     }
